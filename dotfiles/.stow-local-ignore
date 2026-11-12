@@ -1,0 +1,11 @@
+.git
+.gitignore
+RCS
+.+,v
+
+CVS
+
+^/README.*
+^/LICENSE.*
+
+

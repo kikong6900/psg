@@ -1,0 +1,30 @@
+
+GNU stow
+manage dot files
+just cd to this folder
+run 
+stow
+and it will know how to sym link dot files from home dir to `pwd`
+
+it comes with some default ignore, the .stow-local-ignore i seeded is actually subset of what it default ignore, but i wanted to seed the file.
+
+
+may not want ssh key here
+but the .ssh/config could be good.  
+not sure how to do that yet.
+
+
+STOW
+----
+
+apt install stow
+
+cd .../dotfiles
+stow .
+
+
+// more tricky setup...  files that are inside the .config folder
+
+stow adopt .config/alacrittybackup
+
+

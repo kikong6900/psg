@@ -1,1 +1,1 @@
-script/sh/.bashrc
+dotfiles/.bashrc
