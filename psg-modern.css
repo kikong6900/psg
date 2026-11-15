@@ -1,0 +1,382 @@
+/*
+  psg-modern.css — 2026 modernization overlay for PSG (Sys Admin Pocket Survival Guide)
+
+  Loaded AFTER psg.css / psg2.css / psg-table.css / psg-positioning.css so it wins
+  the cascade without modifying any legacy file. Targets the ids/classes the pages
+  actually use: #wrapper #header #navigation #content (.azul) on layout pages, and
+  the div.navheader table shell on content pages. No content HTML was rewritten.
+
+  Palette: keeps the original green-on-beige spirit (#060 green, #eeb paper) but
+  re-tuned for contrast and dark-mode support.
+*/
+
+:root {
+  --psg-bg: #f4f1e4;            /* paper */
+  --psg-surface: #fffdf5;
+  --psg-ink: #24292f;
+  --psg-muted: #57606a;
+  --psg-green: #1a7f37;         /* brand green, AA on paper */
+  --psg-green-dark: #116329;
+  --psg-green-tint: #e6f4ea;
+  --psg-accent: #0969da;
+  --psg-border: #d9d4c2;
+  --psg-code-bg: #1e2227;
+  --psg-code-ink: #e6edf3;
+  --psg-radius: 10px;
+  --psg-shadow: 0 1px 3px rgba(36, 41, 47, 0.08), 0 4px 14px rgba(36, 41, 47, 0.06);
+  --psg-font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --psg-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --psg-bg: #14181d;
+    --psg-surface: #1c2128;
+    --psg-ink: #e6edf3;
+    --psg-muted: #9aa4af;
+    --psg-green: #4ec46a;
+    --psg-green-dark: #7ee2a0;
+    --psg-green-tint: #17301f;
+    --psg-accent: #58a6ff;
+    --psg-border: #333a42;
+    --psg-code-bg: #0d1117;
+    --psg-code-ink: #dbe5ee;
+    --psg-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* ---------- base ---------- */
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--psg-font) !important;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--psg-ink) !important;
+  background: var(--psg-bg) !important;
+  text-align: left;
+  margin: 0 !important;
+}
+
+/* legacy pages set bg via inline bgcolor / CSS on BODY — covered above */
+
+img, video, iframe { max-width: 100%; height: auto; }
+
+/* legacy yellow-flash hover -> calm underline (soft-deprecate, not delete) */
+a { color: var(--psg-accent); }
+a:link, a:visited { color: var(--psg-accent); text-decoration: none; }
+a:hover, a:focus { text-decoration: underline; text-underline-offset: 2px; background: transparent !important; color: var(--psg-green-dark); }
+a:active { color: var(--psg-green); background: transparent !important; text-decoration: none; }
+
+:focus-visible {
+  outline: 2px solid var(--psg-accent);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+/* ---------- layout pages: #wrapper shell ---------- */
+
+#wrapper {
+  width: 100% !important;
+  max-width: 1200px;
+  margin: 0 auto !important;
+  background: var(--psg-surface) !important;
+  box-shadow: var(--psg-shadow);
+  border: 1px solid var(--psg-border);
+  border-radius: var(--psg-radius);
+  overflow: hidden;
+  text-align: left;
+}
+
+#header {
+  background: linear-gradient(135deg, var(--psg-green-tint), var(--psg-surface)) !important;
+  border-bottom: 3px solid var(--psg-green);
+  padding: 28px 32px 22px;
+}
+
+#header #title {
+  font: 700 clamp(1.7rem, 4vw, 2.6rem)/1.15 var(--psg-font) !important;
+  font-variant: normal !important;
+  letter-spacing: -0.02em;
+  color: var(--psg-green-dark) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+#header #sub-title {
+  font: 400 1.05rem/1.4 var(--psg-font) !important;
+  font-variant: normal !important;
+  color: var(--psg-muted) !important;
+  margin: 6px 0 0 !important;
+  padding: 0 !important;
+}
+
+/* two-column: sidebar nav + content */
+body:has(#navigation) #wrapper {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+}
+
+#navigation {
+  grid-row: 2;
+  background: var(--psg-surface);
+  border-right: 1px solid var(--psg-border);
+  padding: 18px 14px 32px;
+}
+
+#content {
+  grid-row: 2;
+  padding: 26px 36px 48px;
+  min-width: 0;          /* let pre/table shrink instead of overflowing */
+}
+
+/* sidebar sections */
+#navigation .azul {
+  font: 700 0.78rem/1 var(--psg-font);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--psg-green);
+  margin: 22px 8px 8px;
+  padding: 0 0 6px;
+  border-bottom: 2px solid var(--psg-green-tint);
+}
+
+#navigation .azul:first-child { margin-top: 4px; }
+
+#navigation ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#navigation li {
+  margin: 2px 0;
+  padding: 0;
+  line-height: 1.45;
+}
+
+#navigation a {
+  display: block;
+  padding: 5px 10px;
+  border-radius: 7px;
+  font-size: 0.92rem;
+  color: var(--psg-ink);
+}
+
+#navigation a:hover {
+  background: var(--psg-green-tint);
+  color: var(--psg-green-dark);
+  text-decoration: none;
+}
+
+/* ---------- content pages: div.navheader table shell ---------- */
+
+.navheader {
+  background: var(--psg-surface);
+  border-bottom: 3px solid var(--psg-green);
+}
+
+.navheader table {
+  width: 100% !important;
+  border-collapse: collapse;
+}
+
+.navheader th {
+  background: linear-gradient(135deg, var(--psg-green-tint), var(--psg-surface)) !important;
+  padding: 14px 16px !important;
+  text-align: left;
+}
+
+.navheader th a {
+  font: 700 1.15rem/1.2 var(--psg-font) !important;
+  color: var(--psg-green-dark) !important;
+  text-transform: none;
+}
+
+.navheader td {
+  padding: 8px 10px !important;
+  font-size: 0.9rem;
+  background: var(--psg-surface);
+}
+
+/* content-page body flows full width like the wrapper pages */
+body > .chapter,
+body > .navheader ~ * {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+body > .navheader { max-width: none; padding: 0; }
+
+/* ---------- typography ---------- */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--psg-font) !important;
+  color: var(--psg-green-dark) !important;
+  line-height: 1.25;
+  border: 0 !important;
+}
+
+h1 {
+  font-size: 1.9rem !important;
+  font-weight: 700;
+  text-transform: none !important;
+  text-align: left !important;
+  background: transparent !important;
+  margin: 1.6em 0 0.5em !important;
+  padding: 0 0 0.35em !important;
+  border-bottom: 3px solid var(--psg-green) !important;
+}
+
+h2 {
+  font-size: 1.4rem !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  background: transparent !important;
+  margin: 1.5em 0 0.45em !important;
+  padding: 0 !important;
+  border-bottom: 1px solid var(--psg-border) !important;
+}
+
+h3 {
+  font-size: 1.15rem !important;
+  font-style: normal !important;
+  background: transparent !important;
+  margin: 1.3em 0 0.4em !important;
+}
+
+h4, h5, h6 {
+  font-size: 1rem !important;
+  background: transparent !important;
+  color: var(--psg-ink) !important;
+  margin: 1.2em 0 0.35em !important;
+}
+
+p, li { max-width: 78ch; }
+
+/* ---------- code: the heart of this site ---------- */
+
+pre, PRE, pre[class], PRE[class] {
+  background: var(--psg-code-bg) !important;
+  color: var(--psg-code-ink) !important;
+  font-family: var(--psg-mono) !important;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  padding: 14px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--psg-border);
+  overflow-x: auto;
+  white-space: pre;
+  max-width: 100%;
+}
+
+code, tt, kbd, samp {
+  font-family: var(--psg-mono) !important;
+  font-size: 0.9em;
+  background: var(--psg-green-tint);
+  color: var(--psg-green-dark);
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+}
+
+pre code, PRE code, pre tt { background: transparent; color: inherit; padding: 0; border-radius: 0; }
+
+/* ---------- tables ---------- */
+
+table {
+  border-collapse: collapse;
+  width: auto !important;
+  max-width: 100%;
+  font-size: 0.92rem;
+}
+
+table.plug, table[summary] { width: 100% !important; }
+
+th, td {
+  padding: 7px 12px;
+  border-bottom: 1px solid var(--psg-border);
+  text-align: left;
+  vertical-align: top;
+}
+
+thead th, th[scope="col"] {
+  background: var(--psg-green-tint);
+  color: var(--psg-green-dark);
+  font-weight: 700;
+  border-bottom: 2px solid var(--psg-green);
+}
+
+tr:hover > td { background: rgba(26, 127, 55, 0.05); }
+
+/* table used as layout (navheader, old page skeletons) — strip chrome */
+table[summary="Navigation header"] th,
+table[summary="Navigation header"] td { background: transparent; }
+
+/* ---------- images / figures ---------- */
+
+div[align="CENTER"] img { border-radius: 8px; }
+
+/* ---------- retired 2012 widgets ---------- */
+
+/* fixed ad/box strip on the right — overlaps content on phones, off everywhere */
+#fixie, .skinny { display: none !important; }
+
+/* ---------- print ---------- */
+
+@media print {
+  body { background: #fff !important; color: #000 !important; }
+  #wrapper { box-shadow: none; border: 0; max-width: none; }
+  #navigation, .navheader td, #fixie { display: none !important; }
+  pre { white-space: pre-wrap; }
+}
+
+/* ---------- mobile ---------- */
+
+@media (max-width: 768px) {
+  body:has(#navigation) #wrapper { display: block; }
+
+  #header { padding: 20px 18px 16px; }
+
+  #navigation {
+    border-right: 0;
+    border-bottom: 1px solid var(--psg-border);
+    padding: 10px 14px 18px;
+  }
+
+  #navigation ul { columns: 2; column-gap: 18px; }
+  #navigation .azul { break-after: avoid; }
+
+  #navigation a { padding: 6px 8px; font-size: 0.9rem; }
+
+  #content { padding: 18px 16px 36px; }
+
+  body > .chapter, body > .navheader ~ * { padding: 0 14px; }
+
+  pre, PRE {
+    font-size: 0.8rem;
+    border-radius: 6px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table { display: block; overflow-x: auto; }
+
+  .navheader td { display: inline-block; padding: 6px 8px !important; }
+}
+
+@media (max-width: 480px) {
+  #navigation ul { columns: 1; }
+}
+
+/* ---------- motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
