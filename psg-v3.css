@@ -369,3 +369,12 @@ html.psg-v3-menu-on .navheader { display: none; }
 
 /* pages without a legacy navheader (psg2 etc): keep top spacing consistent */
 html.psg-v3-menu-on .psg-v3-menu:first-child { margin-top: 1rem; }
+
+/* ==========================================================================
+   psg2-style pages: retire the vertical float sidebar when the dropdown
+   menu is active (menu carries the same category links). Content reflows
+   to full width — the 165px left margin trick is no longer needed.
+   ========================================================================== */
+html.psg-v3-menu-on #navigation { display: none; }
+html.psg-v3-menu-on #content,
+html.psg-v3-menu-on #wrapper #content { margin-left: 0; }
