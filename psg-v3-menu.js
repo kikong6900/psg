@@ -107,6 +107,9 @@
 
     nav.appendChild(ul);
 
+    // signal that the dropdown menu is active, so legacy nav bar can hide
+    document.documentElement.classList.add('psg-v3-menu-on');
+
     // auto-expand the category that contains the current page (non-hover context)
     var here = nav.querySelector('.has-here');
     if (here) {

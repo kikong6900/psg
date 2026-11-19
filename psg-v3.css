@@ -362,3 +362,10 @@ blockquote {
   .psg-v3-cat:hover > .psg-v3-drop { display: none; }  /* mobile: click only */
   .psg-v3-cat.open:hover > .psg-v3-drop { display: block; }
 }
+
+/* hide the legacy navheader table when the dropdown menu is active.
+   The dropdown covers Home + section links; the old table duplicates it. */
+html.psg-v3-menu-on .navheader { display: none; }
+
+/* pages without a legacy navheader (psg2 etc): keep top spacing consistent */
+html.psg-v3-menu-on .psg-v3-menu:first-child { margin-top: 1rem; }
