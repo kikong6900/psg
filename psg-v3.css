@@ -272,3 +272,93 @@ blockquote {
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; }
 }
+
+/* ==========================================================================
+   psg-v3 dropdown menu (injected by psg-v3-menu.js)
+   ========================================================================== */
+.psg-v3-menu {
+  max-width: 75rem;
+  margin: -1.2rem auto 2rem;
+  background: var(--bg-raised);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+.psg-v3-menu > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+.psg-v3-menu li { position: relative; margin: 0; }
+.psg-v3-home a {
+  display: block;
+  padding: .5rem .9rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-decoration: none;
+}
+.psg-v3-cat > button {
+  all: unset;
+  display: block;
+  padding: .5rem .8rem;
+  font-size: .88rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  cursor: pointer;
+  font-family: var(--sans);
+}
+.psg-v3-cat > button::after { content: " ▾"; font-size: .7em; color: var(--ink-faint); }
+.psg-v3-cat > button:hover,
+.psg-v3-cat.open > button { color: var(--accent); background: var(--accent-soft); }
+
+.psg-v3-drop {
+  list-style: none;
+  margin: 0;
+  padding: .4rem 0;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 13rem;
+  background: var(--bg-raised);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  box-shadow: 0 6px 20px rgb(16 24 40 / .14);
+  z-index: 100;
+  display: none;
+}
+.psg-v3-cat.open > .psg-v3-drop { display: block; }
+.psg-v3-cat:hover > .psg-v3-drop { display: block; }  /* desktop hover */
+.psg-v3-drop li a {
+  display: block;
+  padding: .35rem 1rem;
+  font-size: .86rem;
+  color: var(--ink-soft);
+  text-decoration: none;
+}
+.psg-v3-drop li a:hover {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+/* mark current page in dropdown */
+.psg-v3-drop li a.here {
+  font-weight: 700;
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+@media (max-width: 48rem) {
+  .psg-v3-menu > ul { flex-direction: column; }
+  .psg-v3-drop {
+    position: static;
+    display: none;
+    border: 0;
+    box-shadow: none;
+    background: var(--bg-code);
+  }
+  .psg-v3-cat.open > .psg-v3-drop { display: block; }
+  .psg-v3-cat:hover > .psg-v3-drop { display: none; }  /* mobile: click only */
+  .psg-v3-cat.open:hover > .psg-v3-drop { display: block; }
+}
