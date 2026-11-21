@@ -378,3 +378,27 @@ html.psg-v3-menu-on .psg-v3-menu:first-child { margin-top: 1rem; }
 html.psg-v3-menu-on #navigation { display: none; }
 html.psg-v3-menu-on #content,
 html.psg-v3-menu-on #wrapper #content { margin-left: 0; }
+
+/* ==========================================================================
+   psg-modern.css two-column grid interplay: when the dropdown menu is
+   active the sidebar (#navigation) is hidden, so collapse the wrapper
+   grid to a single full-width column. Also free #content/#tailer from
+   the legacy 165px left margin trick (psg2.css) and de-yellow wrapper.
+   ========================================================================== */
+html.psg-v3-menu-on body:has(#navigation) #wrapper,
+html.psg-v3-menu-on #wrapper {
+  display: block;
+  grid-template-columns: none;
+  max-width: 75rem;
+  margin-left: auto;
+  margin-right: auto;
+  background: transparent;
+  padding: 0 1rem;
+}
+html.psg-v3-menu-on #content,
+html.psg-v3-menu-on #tailer {
+  margin-left: 0;
+  border-left: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
